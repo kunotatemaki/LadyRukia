@@ -4,6 +4,15 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+//read variable from local_properties (no in git)
+def getKeyGoogleMaps = { ->
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    def keyGooglePlaces = properties.getProperty('keyGooglePlaces')
+    println "leido directamente is  $keyGooglePlaces"
+    return keyGooglePlaces
+}
+
 android {
     compileSdkVersion 27
     defaultConfig {
@@ -13,6 +22,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        manifestPlaceholders = [keyGooglePlaces:getKeyGoogleMaps()]
     }
     buildTypes {
         release {
