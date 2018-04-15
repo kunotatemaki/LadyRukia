@@ -1,28 +1,18 @@
 package com.rukiasoft.androidapps.ladyrukia
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.places.Places
-
-import kotlinx.android.synthetic.main.activity_main.*
 import com.google.android.gms.location.places.ui.PlacePicker
-import android.widget.Toast
-import com.google.android.gms.location.places.Place
-import android.content.Intent
-import android.support.v4.app.FragmentActivity
-import android.util.Log
-import com.google.android.gms.common.api.ResultCallback
-import com.google.android.gms.location.places.PlaceLikelihood
-import com.google.android.gms.location.places.PlaceLikelihoodBuffer
-
-
-
-
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedListener {
@@ -68,7 +58,7 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedList
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         if (requestCode == placePickerRequest) {
             if (resultCode == Activity.RESULT_OK) {
-                val place = PlacePicker.getPlace(data, this)
+                val place = PlacePicker.getPlace(this, data)
                 val toastMsg = String.format("Place: %s", place.name)
                 Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show()
             }
