@@ -2,12 +2,13 @@
 
 buildscript {
     ext.kotlin_version = '1.2.31'
+    ext.gradle_version = '3.2.0-alpha10'
     repositories {
         google()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0-alpha09'
+        classpath "com.android.tools.build:gradle:$gradle_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -21,6 +22,23 @@ allprojects {
         jcenter()
     }
 }
+
+ext{
+
+    databindingVersion = gradle_version
+    daggerVersion = '2.11'
+    supportLibraryVersion = '27.1.0'
+    liveDataViewModel = '1.1.1'
+    timber = '4.6.0'
+    constraintLayout = '1.0.2'
+    roomVersion = '1.0.0'
+    paging = '1.0.0-alpha7'
+    glideVersion = '4.3.1'
+    firebaseVersion = "12.0.1"
+    multidex = "1.0.3"
+    play_services = "15.0.0"
+}
+
 
 task clean(type: Delete) {
     delete rootProject.buildDir
