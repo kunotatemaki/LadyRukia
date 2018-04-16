@@ -12,6 +12,7 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.places.Places
 import com.google.android.gms.location.places.ui.PlacePicker
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -19,10 +20,14 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedList
 
     private val placePickerRequest = 1
 
+    val db = FirebaseFirestore.getInstance()
+
     override fun onConnectionFailed(p0: ConnectionResult) {
 
     }
 
+
+    private val s = "cretinooooo"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,14 +58,32 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedList
                 likelyPlaces.release()
             }
         }catch (e: SecurityException){}
+
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == placePickerRequest) {
             if (resultCode == Activity.RESULT_OK) {
                 val place = PlacePicker.getPlace(this, data)
                 val toastMsg = String.format("Place: %s", place.name)
                 Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show()
+                // Create a new user with a first, middle, and last name
+                val placeMap = HashMap<String, Any>()
+                placeMap["name"] = place.name.toString() + " updated"
+                placeMap["type"] = place.placeTypes
+                placeMap["rating"] = place.rating
+                placeMap["priceLevel"] = place.priceLevel
+
+                // Add a new document with a generated ID
+                db.document("places/${place.id}")
+                        .set(placeMap)
+                        .addOnCompleteListener {task ->
+                            if(task.isSuccessful){
+                                Log.d(s, "DocumentSnapshot added with ID: " + place.id)
+                            }else{
+                                Log.d(s, "Error adding document: " + task.exception?.message)
+                            }
+                        }
             }
         }
     }
@@ -81,3 +104,12 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedList
         }
     }
 }
+
+
+
+
+
+
+
+
+

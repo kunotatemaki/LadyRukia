@@ -9,7 +9,7 @@ def getKeyGoogleMaps = { ->
     Properties properties = new Properties()
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
     def keyGooglePlaces = properties.getProperty('keyGooglePlaces')
-    println "leido directamente is  $keyGooglePlaces"
+    println "the read key is $keyGooglePlaces"
     return keyGooglePlaces
 }
 
@@ -44,5 +44,11 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
     //Google places
-    implementation "com.google.android.gms:play-services-places:$rootProject.play_services"
+    implementation "com.google.android.gms:play-services-places:$rootProject.playServices"
+
+    //Firebase
+    implementation "com.google.firebase:firebase-core:$firebaseVersion"
+    implementation "com.google.firebase:firebase-firestore:$firebaseVersion"
 }
+
+apply plugin: 'com.google.gms.google-services'
