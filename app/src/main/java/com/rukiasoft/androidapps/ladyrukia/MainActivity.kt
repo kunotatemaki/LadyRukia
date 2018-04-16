@@ -69,9 +69,11 @@ class MainActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedList
                 Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show()
                 // Create a new user with a first, middle, and last name
                 val placeMap = HashMap<String, Any>()
-                placeMap["name"] = place.name.toString() + " updated"
+                placeMap["name"] = place.name
                 placeMap["type"] = place.placeTypes
                 placeMap["rating"] = place.rating
+                placeMap["latitude"] = place.latLng.latitude
+                placeMap["longitude"] = place.latLng.longitude
                 placeMap["priceLevel"] = place.priceLevel
 
                 // Add a new document with a generated ID
